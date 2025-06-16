@@ -1,0 +1,50 @@
+import matplotlib.pyplot as plt
+
+#  function: mario
+def decode(item):
+    if item[0] == "P":
+        item_type = "Power-up"
+    else: 
+        item_type = "Obstacle"
+    x_coor = item[1:-1]  # python's index includes the start but not the end
+    y_coor = item[-1]
+    return item_type, x_coor, y_coor
+
+
+x_coors = []
+y_coors = []
+decoded_type_list = []
+
+with open("secret_coordinates.txt", "r") as mario_file:
+    content = mario_file.readlines()
+    for line in content:
+        line = line.strip()  # get rid of hidden characters (spaces at the end of the line)
+        decoded_type, decoded_x, decoded_y = decode(line)
+        print(decoded_type, "(", decoded_x, ",", decoded_y, ")")
+        x_coors.append(decoded_x)
+        y_coors.append(decoded_y)
+        decoded_type_list.append(decoded_type)
+
+print(x_coors, "\n", y_coors)
+plt.scatter(x_coors, y_coors)
+plt.show()
+
+path_x = []
+path_y = []
+
+for x in range (max[x_coors]):
+    for x_value in x_coors:
+        if int(x) == int(x_value):
+            if x in x_coors:
+                path_x.append(x)
+                if decoded_type_list[x] == "Power-up":
+                    path_y.append(decoded_y[x])
+                else:
+                    if decoded_y[x] == 0:
+                        path_y.append(2)
+                    else:
+                        path_y.append(0)
+            path_x.append(0)
+            path_y.append(0)
+
+plt.plot(path_x, path_y)
